@@ -1,0 +1,36 @@
+<div class="p-6 space-y-6 max-w-6xl mx-auto">
+  <h1 class="text-4xl leading-none tracking-tight text-gray-900 mb-5">Search for new movies to add</h1>
+
+  <div>
+    <mat-form-field class="w-full md:w-96">
+      <input matInput placeholder="Movie title" [(ngModel)]="q" (keyup.enter)="search()">
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="search()">Search</button>
+  </div>
+
+  <div *ngIf="result()?.items as list">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <mat-card *ngFor="let m of list" class="flex flex-col justify-between h-full">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold">{{ m.title }}</h3>
+          <p class="text-sm text-gray-500">{{ m.year }}</p>
+        </div>
+
+        <button *ngIf="!inFav(m.imdbID)"
+                mat-stroked-button color="accent"
+                (click)="add(m)">Add to favourites</button>
+
+        <button *ngIf="inFav(m.imdbID)"
+                mat-stroked-button color="warn"
+                (click)="remove(m)">Remove</button>
+      </mat-card>
+    </div>
+
+    <mat-paginator class="mt-6"
+                   [length]="result()?.total || 0"
+                   [pageSize]="10"
+                   [pageIndex]="page-1" 
+                   (page)="onPage($event)">
+    </mat-paginator>
+  </div>
+</div>

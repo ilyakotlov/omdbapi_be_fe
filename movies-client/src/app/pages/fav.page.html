@@ -1,0 +1,25 @@
+<div class="p-8 max-w-6xl mx-auto">
+  <h1 class="text-4xl leading-none tracking-tight text-gray-900 mb-5">Favorite movies</h1>
+
+  <ng-container *ngIf="favs().length === 0; else grid">
+    <div class="flex flex-col items-center gap-4 text-gray-500 py-16">
+      <mat-icon fontIcon="movie" class="text-6xl"></mat-icon>
+      <p>No favorite movies yet.</p>
+    </div>
+  </ng-container>
+
+  <ng-template #grid>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <mat-card *ngFor="let f of favs()" class="flex flex-col justify-between h-full">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold">{{ f.title }}</h3>
+          <p class="text-sm text-gray-500">{{ f.year }}</p>
+        </div>
+
+        <button mat-stroked-button color="warn" (click)="remove(f.imdbID)">
+          Remove
+        </button>
+      </mat-card>
+    </div>
+  </ng-template>
+</div>
